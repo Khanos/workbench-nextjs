@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import usePokemonDetails from '../../../hooks/usePokemonDetails'
 const pokeApi = process.env.NEXT_PUBLIC_POKEAPI;
 
@@ -9,25 +10,33 @@ export default function PokemonDetails({params}) {
   const [details, loading, error] = usePokemonDetails(pokemonId || 1);
 
   const showDetails = (details) => {
-    console.log(details)
-    return <div className='p-4 flex flex-col justify-center'>
-      <Link href="/">Back to home</Link>
-      <h3 className='text-lg'>{details.name}</h3>
-      <img width='300' height='300' src={pokeApi + details.image} alt={details.name} />
-      <ul>
-        {details.stats.map((item, index) => {
-          return <li className='text-base' key={index}>
-            <span className='font-bold mr-2'>{item.name}:</span>
-            <span className=''>{item.value}</span>
-          </li>
-        })}
-      </ul>
-      <div>{details.type.join(', ')}</div>
+    return <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white p-5 text-black">
+      <Link className='block w-auto mb-5 font-bold text-blue-600 hover:text-blue-400' href="/">Back to home</Link>
+      <Image className="w-full" src={pokeApi + details.image} alt={details.name} width="200" height="200" />
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2 flex justify-center">{details.name}</div>
+        <ul>
+          {details.stats.map((item, index) => {
+            return (
+              <li key={index}>
+                <span className="font-bold">{item.name}:</span> {item.value}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        {details.type.map((type, index) => (
+          <span key={index} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            {type}
+          </span>
+        ))}
+      </div>
     </div>
   };
   if(error) return <>Ups something bad happens</>
   return (
-    <div>
+    <div className='flex justify-center items-center p-10'>
       {loading ? <>Loading</>: showDetails(details)}
     </div>
   );

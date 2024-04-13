@@ -7,10 +7,10 @@ const pokeApi = process.env.NEXT_PUBLIC_POKEAPI;
 
 export default function PokemonDetails({params}) {
   const { id: pokemonId } = params;
-  const [details, loading, error] = usePokemonDetails(pokemonId || 1);
+  const [details, loading, error] = usePokemonDetails(pokemonId);
 
   const showDetails = (details) => {
-    return <div className="max-w-sm rounded overflow-hidden shadow-lg m-4 bg-white p-5 text-black">
+    return <div className="w-[25rem] rounded overflow-hidden shadow-lg m-4 bg-white p-5 text-black">
       <Link className='block w-auto mb-5 font-bold text-blue-600 hover:text-blue-400' href="/">Back to home</Link>
       <Image className="w-full" src={pokeApi + details.image} alt={details.name} width="200" height="200" />
       <div className="px-6 py-4">

@@ -9,7 +9,7 @@ const PokemonList = (props) => {
     <div className="grid grid-cols-4 gap-6">
       {pokemons.map((pokemon, index) => (
         <div key={index} className='bg-white text-black'>
-          <Link href={`/pokemon/${pokemon.id}`}>
+          <Link href={`/pokemon/${pokemon.id || 1}`}>
             <h3 className='p-2 text-lg font-bold'>{pokemon.name}</h3>
             <Image width="300" height="300" src={pokeApi + pokemon.image} alt={pokemon.name} />
           </Link>
